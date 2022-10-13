@@ -18,9 +18,9 @@ export default function ButtonAppBar() {
             aria-label="menu"
             sx={{ mr: 2 }}
           ></IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Button sx={{ flexGrow: 1 }} color="inherit" href="/">
             Notes
-          </Typography>
+          </Button>
           <Button color="inherit" href="/login">
             Login
           </Button>

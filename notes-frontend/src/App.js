@@ -6,18 +6,20 @@ import Footer from "./components/Footer";
 import { Button, Typography, TextField, Box } from "@mui/material";
 import "./App.css";
 import Nav from "./components/Nav";
-import { BrowserRouter as Router } from "react-router-dom";
+import loginService from './services/login'
+import LoginForm from './components/LoginForm'
+
 
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+ 
 
   useEffect(() => {
-
-
     noteService.getAll().then((initialNotes) => {
       setNotes(initialNotes);
     });
@@ -77,10 +79,24 @@ const App = () => {
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important);
 
+  // handle Login
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    console.log('logging in with', username, password)
+    try {
+      const user = await loginService.login({ username, password })
+      console.log('user', user);
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      setErrorMessage('Wrong credentials')
+      setTimeout(() => {setErrorMessage(null)}, 5000)
+}
+
+  }
   return (
-    <Router>
       <div className="App">
-        <Nav />
         <Typography variant="h2">Notes</Typography>
         <Notification message={errorMessage} />
         <div>
@@ -107,6 +123,7 @@ const App = () => {
           })}
         </ul>
 
+      // Add new note form
         <Box
           component="form"
           onSubmit={addNote}
@@ -130,10 +147,11 @@ const App = () => {
           <Button type="submit" variant="contained" sx={{ mt: 3 }}>
             save
           </Button>
-        </Box>
+      </Box>
+      
         <Footer />
-      </div>
-    </Router>
+        </div>
+    
   );
 };
 
