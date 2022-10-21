@@ -4,6 +4,11 @@ import axios from "axios";
 // const baseUrl = "https://powerful-hollows-59426.herokuapp.com/api/notes";
 const baseUrl = "/api/notes";
 
+let token = null;
+
+const setToken = newToken => {
+  token = `bearer ${newToken}`
+}
 const getAll = () => {
   const request = axios.get(baseUrl); // assigned the promise returned by axios to the request variable and call its then method
   const nonExisting = {
@@ -16,11 +21,15 @@ const getAll = () => {
   return request.then((response) => response.data.concat(nonExisting));
 };
 
-const create = (newObject) => {
-  const request = axios.post(baseUrl, newObject);
-  return request.then((response) => {
+const create = async (newObject) => {
+  const config = {
+    headers: {Authorization: token}
+  }
+
+  const response  =await  axios.post(baseUrl, newObject, config);
+  
     return response.data;
-  });
+  
 };
 
 const update = (id, newObject) => {
@@ -38,4 +47,5 @@ export default {
   create,
   update,
   remove,
+  setToken
 };

@@ -6,8 +6,8 @@ import Footer from "./components/Footer";
 import { Button, Typography, TextField, Box } from "@mui/material";
 import "./App.css";
 import Nav from "./components/Nav";
+import { BrowserRouter as Router } from "react-router-dom";
 import loginService from './services/login'
-import LoginForm from './components/LoginForm'
 
 
 const App = () => {
@@ -17,13 +17,22 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
- 
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     noteService.getAll().then((initialNotes) => {
       setNotes(initialNotes);
     });
   }, []);
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      noteService.setToken(user.token)
+    }
+  }, [])
 
   const addNote = (event) => {
     event.preventDefault();
@@ -86,19 +95,74 @@ const App = () => {
     try {
       const user = await loginService.login({ username, password })
       console.log('user', user);
+      window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
+      noteService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
       setErrorMessage('Wrong credentials')
-      setTimeout(() => {setErrorMessage(null)}, 5000)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
 }
 
   }
+
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
+    <div>
+        username
+        <input type="text" name="username" value={username} onChange={({ target }) => setUsername(target.value)} />
+    </div>
+    <div>
+        password
+        <input type="password" name="Password" value={password} onChange={({ target }) => setPassword(target.value)} />
+    </div>
+    <button type='submit'>login</button>
+</form>
+  )
+
+  const noteForm = () => (
+    <Box
+    component="form"
+    onSubmit={addNote}
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "start",
+      width: "300px",
+    }}
+  >
+    <Typography variant="h4">Add new note</Typography>
+    <TextField
+      size="small"
+      type="text"
+      label="Note content"
+      required
+      autoFocus
+      value={newNote}
+      onChange={handleNoteChange}
+    />
+    <Button type="submit" variant="contained" sx={{ mt: 3 }}>
+      save
+    </Button>
+  </Box>
+  )
+
   return (
+    <Router>
       <div className="App">
+        <Nav />
         <Typography variant="h2">Notes</Typography>
         <Notification message={errorMessage} />
+      
+        {user === null ? loginForm() : <div>
+          <p>{user.name} logged-in</p>
+          {noteForm()}
+        </div>}
+    
+      
         <div>
           <Button
             onClick={() => setShowAll(!showAll)}
@@ -123,35 +187,10 @@ const App = () => {
           })}
         </ul>
 
-      // Add new note form
-        <Box
-          component="form"
-          onSubmit={addNote}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "start",
-            width: "300px",
-          }}
-        >
-          <Typography variant="h4">Add new note</Typography>
-          <TextField
-            size="small"
-            type="text"
-            label="Note content"
-            required
-            autoFocus
-            value={newNote}
-            onChange={handleNoteChange}
-          />
-          <Button type="submit" variant="contained" sx={{ mt: 3 }}>
-            save
-          </Button>
-      </Box>
-      
-        <Footer />
-        </div>
     
+        <Footer />
+      </div>
+    </Router>
   );
 };
 
