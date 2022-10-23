@@ -6,9 +6,10 @@ const baseUrl = "/api/notes";
 
 let token = null;
 
-const setToken = newToken => {
-  token = `bearer ${newToken}`
-}
+const setToken = (newToken) => {
+  token = `bearer ${newToken}`;
+};
+
 const getAll = () => {
   const request = axios.get(baseUrl); // assigned the promise returned by axios to the request variable and call its then method
   const nonExisting = {
@@ -23,13 +24,12 @@ const getAll = () => {
 
 const create = async (newObject) => {
   const config = {
-    headers: {Authorization: token}
-  }
+    headers: { Authorization: token },
+  };
 
-  const response  =await  axios.post(baseUrl, newObject, config);
-  
-    return response.data;
-  
+  const response = await axios.post(baseUrl, newObject, config);
+
+  return response.data;
 };
 
 const update = (id, newObject) => {
@@ -47,5 +47,5 @@ export default {
   create,
   update,
   remove,
-  setToken
+  setToken,
 };
