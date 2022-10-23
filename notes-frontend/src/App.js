@@ -1,9 +1,7 @@
-import Note from "./components/Note";
 import { useState, useEffect } from "react";
 import noteService from "./services/notes";
 import Notification from "./components/Notification";
 import Footer from "./components/Footer";
-import { Button, Typography } from "@mui/material";
 import "./App.css";
 import Nav from "./components/Nav";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
@@ -11,8 +9,6 @@ import loginService from "./services/login";
 import registerService from "./services/register";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm.jsx";
-import NoteForm from "./components/NoteForm";
-import register from "./services/register";
 import NoteList from "./components/NoteList";
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -92,7 +88,7 @@ const App = () => {
       noteService.setToken(user.token);
       setUser(user);
     } catch (exception) {
-      setErrorMessage("Wrong credentials");
+      setErrorMessage("Wrong username or password");
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
