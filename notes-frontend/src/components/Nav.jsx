@@ -12,7 +12,7 @@ export default function Nav(props) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: "rgb(81 117 255)" }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -26,9 +26,14 @@ export default function Nav(props) {
           </Button>
 
           {user && (
-            <Button color="inherit" onClick={handleLogout}>
-              Log out
-            </Button>
+            <>
+              <Button color="inherit" href="/mynotes">
+                My notes
+              </Button>
+              <Button color="inherit" onClick={handleLogout}>
+                Log out
+              </Button>
+            </>
           )}
           {!user && (
             <>

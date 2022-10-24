@@ -10,6 +10,7 @@ import registerService from "./services/register";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm.jsx";
 import NoteList from "./components/NoteList";
+import MyNotes from "./components/MyNotes.jsx";
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(true);
@@ -46,6 +47,7 @@ const App = () => {
 
   const toggleImportanceOf = (id) => {
     const note = notes.find((n) => n.id === id);
+    console.log("noteToToggle", note);
     const changedNote = { ...note, important: !note.important };
 
     noteService
@@ -151,6 +153,18 @@ const App = () => {
         <Route
           path="/login"
           element={<LoginForm handleLogin={handleLogin} />}
+        ></Route>
+        <Route
+          path="/mynotes"
+          element={
+            <MyNotes
+              notes={notes}
+              user={user}
+              handleEditNote={handleEditNote}
+              handleRemoveNote={handleRemoveNote}
+              toggleImportanceOf={toggleImportanceOf}
+            />
+          }
         ></Route>
       </Routes>
 

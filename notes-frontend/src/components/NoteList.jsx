@@ -22,7 +22,7 @@ const NoteList = (props) => {
       <Notification message={errorMessage} />
       {user && (
         <div>
-          <p>{user.name} logged-in</p>
+          <p>Welcome {user.name}. You are now logged-in</p>
           {<NoteForm addNote={addNote} />}
         </div>
       )}
@@ -32,7 +32,7 @@ const NoteList = (props) => {
           onClick={() => setShowAll(!showAll)}
           type="button"
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 3, mb: 2, backgroundColor: "rgb(81 117 255)" }}
         >
           show {showAll ? "important" : "all"}
         </Button>
@@ -46,6 +46,7 @@ const NoteList = (props) => {
               toggleImportance={() => toggleImportanceOf(note.id)}
               handleRemoveNote={() => handleRemoveNote(note.id)}
               handleEditNote={handleEditNote}
+              user={user}
             />
           );
         })}

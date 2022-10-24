@@ -10,7 +10,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 
 const Note = (props) => {
-  const { note, toggleImportance, handleRemoveNote, handleEditNote } = props;
+  const { note, toggleImportance, handleRemoveNote, handleEditNote, user } =
+    props;
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedNoteContent, setEditedNoteContent] = useState(note.content);
