@@ -16,14 +16,21 @@ const Note = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedNoteContent, setEditedNoteContent] = useState(note.content);
 
-  const handleClickSave = (id) => {
+  const handleClickSave = (note) => {
+    console.log("noteBeforeEdited", note);
     const editedNoteObject = {
+      ...note,
       content: editedNoteContent,
       date: note.date,
       important: note.important,
     };
-    console.log("id of note to edit", id, "editedNoteObject", editedNoteObject);
-    handleEditNote(id, editedNoteObject);
+    console.log(
+      "id of note to edit",
+      note.id,
+      "editedNoteObject",
+      editedNoteObject
+    );
+    handleEditNote(note.id, editedNoteObject);
     setIsEditing(false);
   };
   return (
@@ -62,7 +69,7 @@ const Note = (props) => {
           <Button
             sx={{ m: 0.5, backgroundColor: "#ffc107" }}
             size="large"
-            onClick={() => handleClickSave(note.id)}
+            onClick={() => handleClickSave(note)}
             variant="contained"
             color="primary"
             startIcon={<SaveIcon />}
