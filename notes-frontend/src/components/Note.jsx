@@ -17,19 +17,13 @@ const Note = (props) => {
   const [editedNoteContent, setEditedNoteContent] = useState(note.content);
 
   const handleClickSave = (note) => {
-    console.log("noteBeforeEdited", note);
     const editedNoteObject = {
       ...note,
       content: editedNoteContent,
       date: note.date,
       important: note.important,
     };
-    console.log(
-      "id of note to edit",
-      note.id,
-      "editedNoteObject",
-      editedNoteObject
-    );
+
     handleEditNote(note.id, editedNoteObject);
     setIsEditing(false);
   };

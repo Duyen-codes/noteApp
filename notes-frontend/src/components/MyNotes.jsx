@@ -5,7 +5,7 @@ const MyNotes = (props) => {
   const { notes, user, toggleImportanceOf, handleEditNote, handleRemoveNote } =
     props;
   const userNotes = notes.filter((note) => {
-    return note?.user?.username === user.username;
+    return note?.user?.username === user?.username;
   });
 
   return (

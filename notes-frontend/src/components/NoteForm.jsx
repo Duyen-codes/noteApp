@@ -6,14 +6,11 @@ const NoteForm = (props) => {
   const [newNote, setNewNote] = useState("");
 
   const handleNoteChange = (event) => {
-    console.log(event.target.value);
     setNewNote(event.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("NoteForm submitted");
-    console.log("newNote", newNote);
     addNote(newNote);
     setNewNote("");
   };

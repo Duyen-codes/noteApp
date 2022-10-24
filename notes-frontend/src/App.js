@@ -41,6 +41,7 @@ const App = () => {
     };
 
     noteService.create(noteObject).then((returnedNote) => {
+      console.log("returnedNote from backend", returnedNote);
       setNotes(notes.concat(returnedNote));
     });
   };
@@ -48,26 +49,35 @@ const App = () => {
   const toggleImportanceOf = (id) => {
     const note = notes.find((n) => n.id === id);
     const changedNote = { ...note, important: !note.important };
-    setNotes(notes.map((note) => (note.id !== id ? note : changedNote)));
-    noteService.update(id, changedNote).catch((error) => {
-      setErrorMessage(`Note '${note.content}' was already removed from server`);
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
-      // setNotes(notes.filter((n) => n.id !== id));
-    });
+
+    noteService
+      .update(id, changedNote)
+      .then((returnedNote) => {
+        console.log("returnedNote", returnedNote);
+        setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
+      })
+      .catch((error) => {
+        setErrorMessage(
+          `Note '${note.content}' was already removed from server`
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+        setNotes(notes.filter((n) => n.id !== id));
+      });
   };
 
   const handleRemoveNote = (id) => {
     setNotes(notes.filter((note) => note.id !== id));
-    noteService.remove(id);
+    noteService.remove(id).then();
   };
 
   // handle edit a note
   const handleEditNote = (id, changedNote) => {
-    console.log("id in handleEditNote", id, "changedNote", changedNote);
-    setNotes(notes.map((note) => (note.id !== id ? note : changedNote)));
-    noteService.update(id, changedNote);
+    noteService.update(id, changedNote).then((returnedNote) => {
+      console.log("returnedNote", returnedNote);
+      setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
+    });
   };
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important);
@@ -94,6 +104,7 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem("loggedNoteappUser");
     setUser(null);
+    navigate("/");
   };
 
   // handle register new user
@@ -145,19 +156,21 @@ const App = () => {
         <Route
           path="/login"
           element={<LoginForm handleLogin={handleLogin} />}
-        ></Route>
-        <Route
-          path="/mynotes"
-          element={
-            <MyNotes
-              notes={notes}
-              user={user}
-              handleEditNote={handleEditNote}
-              handleRemoveNote={handleRemoveNote}
-              toggleImportanceOf={toggleImportanceOf}
-            />
-          }
-        ></Route>
+        ></Route>{" "}
+        {user && (
+          <Route
+            path="/mynotes"
+            element={
+              <MyNotes
+                notes={notes}
+                user={user}
+                handleEditNote={handleEditNote}
+                handleRemoveNote={handleRemoveNote}
+                toggleImportanceOf={toggleImportanceOf}
+              />
+            }
+          ></Route>
+        )}
       </Routes>
 
       <Footer />
