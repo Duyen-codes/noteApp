@@ -42,11 +42,13 @@ const App = () => {
 
     noteService.create(noteObject).then((returnedNote) => {
       setNotes(notes.concat(returnedNote));
-      console.log('notes after adding', notes);
+      console.log("notes after adding", notes);
     });
   };
 
   const toggleImportanceOf = (id) => {
+    console.log("toggle importance clicked");
+    console.log("id of note to change importance", id);
     const note = notes.find((n) => n.id === id);
 
     const changedNote = { ...note, important: !note.important };
@@ -77,7 +79,6 @@ const App = () => {
   // handle edit a note
   const handleEditNote = (id, changedNote) => {
     noteService.update(id, changedNote).then((returnedNote) => {
-      console.log("returnedNote", returnedNote);
       setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
     });
   };

@@ -1,29 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Note from "./Note";
 
 const MyNotes = (props) => {
   const { notes, user, toggleImportanceOf, handleEditNote, handleRemoveNote } =
     props;
-  const userNotes = notes.filter((note) => {
-    return note?.user?.username === user?.username;
-  });
+  const [visible, setVisible] = useState(true);
+
+  const userNotes = notes.filter(
+    (note) => note?.user?.username === user?.username
+  );
+
+  console.log("userNotes after useEffect in MyNotes", userNotes);
 
   return (
     <div>
-      My notes will be here
-      {userNotes.map((note) => (
-        <Note
-          key={note.id}
-          note={note}
-          toggleImportance={() => toggleImportanceOf(note.id)}
-          handleRemoveNote={() => handleRemoveNote(note.id)}
-          handleEditNote={handleEditNote}
-          user={user}
-        >
-          {" "}
-          {note.content}
-        </Note>
-      ))}
+      <h2
+        style={{ textAlign: "center", fontSize: "2.5rem", marginBlock: "2rem" }}
+      >
+        My notes will be here
+      </h2>
+      {userNotes.map((note) => {
+        return (
+          <Note
+            key={note.id}
+            note={note}
+            toggleImportance={() => toggleImportanceOf(note.id)}
+            handleRemoveNote={() => handleRemoveNote(note.id)}
+            handleEditNote={handleEditNote}
+            user={user}
+            visible={visible}
+          >
+            {" "}
+            {note.content}
+          </Note>
+        );
+      })}
     </div>
   );
 };

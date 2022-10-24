@@ -10,13 +10,20 @@ import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 
 const Note = (props) => {
-  const { note, toggleImportance, handleRemoveNote, handleEditNote, user } =
-    props;
+  const {
+    note,
+    toggleImportance,
+    handleRemoveNote,
+    handleEditNote,
+    user,
+    visible,
+  } = props;
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedNoteContent, setEditedNoteContent] = useState(note.content);
 
   const handleClickSave = (note) => {
+    console.log("clicked save edit");
     const editedNoteObject = {
       ...note,
       content: editedNoteContent,
@@ -27,22 +34,25 @@ const Note = (props) => {
     handleEditNote(note.id, editedNoteObject);
     setIsEditing(false);
   };
+
   return (
     <li
       className="note"
       style={{
+        padding: "1rem",
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
       }}
     >
-      {note.important ? (
+      {visible && note.important && (
         <Tooltip title="unmark important">
           <IconButton onClick={toggleImportance} sx={{ color: "#ffc107" }}>
             <StarIcon />
           </IconButton>
         </Tooltip>
-      ) : (
+      )}
+      {visible && !note.important && (
         <Tooltip title="mark important">
           <IconButton onClick={toggleImportance}>
             <StarBorderIcon />
@@ -85,16 +95,21 @@ const Note = (props) => {
       ) : (
         <>
           <span>{note.content}</span>
-          <Tooltip title="Edit" placement="top">
-            <IconButton onClick={() => setIsEditing(!isEditing)}>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Delete" placement="top">
-            <IconButton onClick={handleRemoveNote}>
-              <DeleteOutlineIcon />
-            </IconButton>
-          </Tooltip>
+          {visible && (
+            <>
+              {" "}
+              <Tooltip title="Edit" placement="top">
+                <IconButton onClick={() => setIsEditing(!isEditing)}>
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete" placement="top">
+                <IconButton onClick={handleRemoveNote}>
+                  <DeleteOutlineIcon />
+                </IconButton>
+              </Tooltip>
+            </>
+          )}
         </>
       )}
     </li>

@@ -35,7 +35,11 @@ const NoteForm = (props) => {
         value={newNote}
         onChange={handleNoteChange}
       />
-      <Button type="submit" variant="contained" sx={{ mt: 3 }}>
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ mt: 3, backgroundColor: "rgb(81 117 255)" }}
+      >
         save
       </Button>
     </Box>

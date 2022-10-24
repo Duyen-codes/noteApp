@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Typography } from "@mui/material";
 import Note from "./Note";
 import Notification from "./Notification";
 import NoteForm from "./NoteForm";
 
 const NoteList = (props) => {
+  const [visible, setVisible] = useState(false);
   const {
     notesToShow,
     user,
@@ -47,6 +48,7 @@ const NoteList = (props) => {
               handleRemoveNote={() => handleRemoveNote(note.id)}
               handleEditNote={handleEditNote}
               user={user}
+              visible={visible}
             />
           );
         })}
