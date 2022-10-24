@@ -22,7 +22,7 @@ const Note = (props) => {
       date: note.date,
       important: note.important,
     };
-
+    console.log("id of note to edit", id, "editedNoteObject", editedNoteObject);
     handleEditNote(id, editedNoteObject);
     setIsEditing(false);
   };

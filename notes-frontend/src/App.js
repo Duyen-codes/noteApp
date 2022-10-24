@@ -65,6 +65,7 @@ const App = () => {
 
   // handle edit a note
   const handleEditNote = (id, changedNote) => {
+    console.log("id in handleEditNote", id, "changedNote", changedNote);
     setNotes(notes.map((note) => (note.id !== id ? note : changedNote)));
     noteService.update(id, changedNote);
   };
