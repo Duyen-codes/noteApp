@@ -41,20 +41,22 @@ const App = () => {
     };
 
     noteService.create(noteObject).then((returnedNote) => {
-      console.log("returnedNote from backend", returnedNote);
       setNotes(notes.concat(returnedNote));
+      console.log('notes after adding', notes);
     });
   };
 
   const toggleImportanceOf = (id) => {
     const note = notes.find((n) => n.id === id);
+
     const changedNote = { ...note, important: !note.important };
 
     noteService
       .update(id, changedNote)
       .then((returnedNote) => {
-        console.log("returnedNote", returnedNote);
+        console.log("returednNote", returnedNote);
         setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
+        console.log("note", notes);
       })
       .catch((error) => {
         setErrorMessage(
