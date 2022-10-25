@@ -144,7 +144,7 @@ const App = () => {
           }
         ></Route>
         <Route
-          path="/register"
+          path="/users"
           element={<RegisterForm handleRegister={handleRegister} />}
         ></Route>
         <Route

@@ -40,7 +40,7 @@ export default function Nav(props) {
               <Button color="inherit" href="/login">
                 Login
               </Button>
-              <Button color="inherit" href="/register">
+              <Button color="inherit" href="/users">
                 Sign up
               </Button>
             </>
