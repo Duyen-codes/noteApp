@@ -99,7 +99,7 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem("loggedNoteappUser");
     setUser(null);
-    navigate("/");
+    navigate("/login");
   };
 
   // handle register new user
