@@ -37,7 +37,10 @@ const update = (id, newObject) => {
     headers: { Authorization: token },
   };
   const request = axios.put(`${baseUrl}/${id}`, newObject, config);
-  return request.then((response) => response.data);
+  return request.then((response) => {
+    console.log("response.data from noteService update", response.data);
+    return response.data;
+  });
 };
 
 const remove = (id) => {

@@ -45,20 +45,14 @@ const App = () => {
       console.log("notes after adding", notes);
     });
   };
-
+  // toggle importance of note
   const toggleImportanceOf = (id) => {
-    console.log("toggle importance clicked");
-    console.log("id of note to change importance", id);
     const note = notes.find((n) => n.id === id);
-
     const changedNote = { ...note, important: !note.important };
-
     noteService
       .update(id, changedNote)
       .then((returnedNote) => {
-        console.log("returednNote", returnedNote);
         setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
-        console.log("note", notes);
       })
       .catch((error) => {
         setErrorMessage(
@@ -70,7 +64,7 @@ const App = () => {
         setNotes(notes.filter((n) => n.id !== id));
       });
   };
-
+  //remove note
   const handleRemoveNote = (id) => {
     setNotes(notes.filter((note) => note.id !== id));
     noteService.remove(id).then();
@@ -87,10 +81,8 @@ const App = () => {
 
   // handle Login
   const handleLogin = async (username, password) => {
-    console.log("logging in with", username, password);
     try {
       const user = await loginService.login({ username, password });
-      console.log("user", user);
       window.localStorage.setItem("loggedNoteappUser", JSON.stringify(user));
       noteService.setToken(user.token);
       setUser(user);
