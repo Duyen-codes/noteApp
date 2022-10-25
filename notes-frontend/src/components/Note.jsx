@@ -23,7 +23,6 @@ const Note = (props) => {
   const [editedNoteContent, setEditedNoteContent] = useState(note.content);
 
   const handleClickSave = (note) => {
-    console.log("clicked save edit");
     const editedNoteObject = {
       ...note,
       content: editedNoteContent,

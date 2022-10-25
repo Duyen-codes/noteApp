@@ -47,8 +47,6 @@ function LoginForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("login form submitted");
-    console.log("username", username, "password", password);
     handleLogin(username, password);
     setUsername("");
     setPassword("");

@@ -5,22 +5,18 @@ const MyNotes = (props) => {
   const { notes, user, toggleImportanceOf, handleEditNote, handleRemoveNote } =
     props;
   const [visible, setVisible] = useState(true);
-  console.log("user", user);
 
   const myNotes = notes.filter((note) => {
     if (
       note?.user?.username === user?.username ||
       note?.user === user?.userId
     ) {
-      console.log("note", note);
       return note;
     }
 
     return;
   });
 
-  console.log("myNotes after useEffect", myNotes);
-  console.log("MyNotes rendering...");
   return (
     <div>
       <h2

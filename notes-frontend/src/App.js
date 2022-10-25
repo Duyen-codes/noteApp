@@ -11,6 +11,7 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm.jsx";
 import NoteList from "./components/NoteList";
 import MyNotes from "./components/MyNotes.jsx";
+
 const App = () => {
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(true);
@@ -42,7 +43,6 @@ const App = () => {
 
     noteService.create(noteObject).then((returnedNote) => {
       setNotes(notes.concat(returnedNote));
-      console.log("notes after adding", notes);
     });
   };
   // toggle importance of note
@@ -104,7 +104,6 @@ const App = () => {
 
   // handle register new user
   const handleRegister = async (username, name, password) => {
-    console.log("registering with", username, name, password);
     try {
       const newUser = await registerService.register({
         username,
@@ -115,7 +114,7 @@ const App = () => {
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
-      navigate("/");
+      navigate("/login");
     } catch (exception) {
       setErrorMessage("Something went wrong");
       setTimeout(() => {
