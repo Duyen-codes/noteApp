@@ -46,14 +46,18 @@ const Note = (props) => {
     >
       {visible && note.important && (
         <Tooltip title="unmark important">
-          <IconButton onClick={toggleImportance} sx={{ color: "#ffc107" }}>
+          <IconButton
+            onClick={toggleImportance}
+            sx={{ color: "#ffc107" }}
+            id="unmark-important"
+          >
             <StarIcon />
           </IconButton>
         </Tooltip>
       )}
       {visible && !note.important && (
         <Tooltip title="mark important">
-          <IconButton onClick={toggleImportance}>
+          <IconButton onClick={toggleImportance} id="mark-important">
             <StarBorderIcon />
           </IconButton>
         </Tooltip>
