@@ -1,0 +1,19 @@
+import Context from "@mui/base/TabsUnstyled/TabsContext";
+
+describe("Note app", function () {
+  beforeEach(function () {
+    cy.visit("http://localhost:3000");
+  });
+  it("front page can be opened", function () {
+    cy.contains("Notes");
+    cy.contains(
+      "Note app, Department of Computer Science, University of Helsinki 2022"
+    );
+  });
+
+  it("user can login", () => {
+    cy.get('a[href*="login"]').click();
+    cy.get("input:first").type("mluukkai");
+    cy.get("input:second").type("salainen");
+  });
+});
