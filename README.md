@@ -4,7 +4,8 @@
 
 ## Built with
 - React
-- Node 
+- Node
+- Testing-library
 ## Features
 - add note
 - search
