@@ -23,3 +23,29 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// custom command for loggin in with HTTP POST request
+Cypress.Commands.add("login", ({ username, password }) => {
+  cy.request("POST", "http://localhost:3001/api/login", {
+    username,
+    password,
+  }).then(({ body }) => {
+    localStorage.setItem("loggedNoteappUser", JSON.stringify(body));
+    cy.visit("http://localhost:3000");
+  });
+});
+
+// custom command for making a new note with HTTP POST request
+Cypress.Commands.add("createNote", ({ content, important }) => {
+  cy.request({
+    url: "http://localhost:3001/api/notes",
+    method: "POST",
+    body: { content, important },
+    headers: {
+      Authorization: `bearer ${
+        JSON.parse(localStorage.getItem("loggedNoteappUser")).token
+      }`,
+    },
+  });
+  cy.visit("http://localhost:3000");
+});

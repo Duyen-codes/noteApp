@@ -26,14 +26,52 @@ describe("Note app", function () {
     cy.contains("Welcome Matti Luukkainen. You are now logged-in");
   });
 
+  it("login fails with wrong password", function () {
+    cy.get('a[href*="login"]').click();
+    cy.get("#username").type("mluukkai");
+    cy.get("#password").type("wrong");
+    cy.get("#login-button").click();
+
+    cy.contains("Wrong username or password");
+    cy.get(".message").contains("Wrong username or password");
+    cy.get(".message")
+      .should("contain", "Wrong username or password")
+      .and("have.css", "border-style", "solid");
+    cy.get("html").should(
+      "not.contain",
+      "Welcome Matti Luukkainen. You are now logged-in"
+    );
+  });
+
   // Testing new note form
   describe("when logged in", function () {
     // only logged-in users can create new notess, so logging in to the app added to a beforeEach block
+
+    // Bypassing the UI, do HTTP request to the backend to log in instead of logging in by filling a form
+    // beforeEach(function () {
+    //   cy.get('a[href*="login"]').click();
+    //   cy.get("#username").type("mluukkai");
+    //   cy.get("#password").type("salainen");
+    //   cy.get("#login-button").click();
+    // });
+
+    // MAKE LOGIN CODE A CUSTOM COMMAND IN cypress/support/commands.js
+    // beforeEach(function () {
+    //   cy.request("POST", "http://localhost:3001/api/login", {
+    //     username: "mluukkai",
+    //     password: "salainen",
+    //   }).then((response) => {
+    //     console.log("response in then", response);
+    //     localStorage.setItem(
+    //       "loggedNoteappUser",
+    //       JSON.stringify(response.body)
+    //     );
+    //     cy.visit("http://localhost:3000");
+    //   });
+    // });
+
     beforeEach(function () {
-      cy.get('a[href*="login"]').click();
-      cy.get("#username").type("mluukkai");
-      cy.get("#password").type("salainen");
-      cy.get("#login-button").click();
+      cy.login({ username: "mluukkai", password: "salainen" });
     });
 
     it("a new note can be created", function () {
@@ -44,10 +82,17 @@ describe("Note app", function () {
     });
 
     describe("and a note exists", function () {
+      // beforeEach(function () {
+      //   cy.contains("new note").click();
+      //   cy.get("input").type("another note cypress");
+      //   cy.contains("save").click();
+      // });
+
       beforeEach(function () {
-        cy.contains("new note").click();
-        cy.get("input").type("another note cypress");
-        cy.contains("save").click();
+        cy.createNote({
+          content: "another note cypress",
+          important: false,
+        });
       });
 
       it("it can be made important", function () {
