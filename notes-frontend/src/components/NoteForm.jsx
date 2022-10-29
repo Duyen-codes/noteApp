@@ -11,7 +11,11 @@ const NoteForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addNote(newNote);
+
+    addNote({
+      content: newNote,
+      important: Math.random() > 0.5,
+    });
     setNewNote("");
   };
   return (

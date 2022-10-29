@@ -34,13 +34,7 @@ const App = () => {
     }
   }, []);
 
-  const addNote = (newNote) => {
-    const noteObject = {
-      content: newNote,
-      date: new Date(),
-      important: false,
-    };
-
+  const addNote = (noteObject) => {
     noteService.create(noteObject).then((returnedNote) => {
       setNotes(notes.concat(returnedNote));
     });
