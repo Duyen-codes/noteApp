@@ -13,7 +13,10 @@ describe("Note app", function () {
 
   it("user can login", () => {
     cy.get('a[href*="login"]').click();
-    cy.get("input:first").type("mluukkai");
-    cy.get("input:second").type("salainen");
+    cy.get("#username").type("mluukkai");
+    cy.get("#password").type("salainen");
+    cy.get("#login-button").click();
+    // this row ensures taht login was successful
+    cy.contains("Welcome Matti Luukkainen. You are now logged-in");
   });
 });
