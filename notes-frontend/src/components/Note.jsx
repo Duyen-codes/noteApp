@@ -50,6 +50,7 @@ const Note = (props) => {
             onClick={toggleImportance}
             sx={{ color: "#ffc107" }}
             id="unmark-important"
+            className="unmark-important"
           >
             <StarIcon />
           </IconButton>
