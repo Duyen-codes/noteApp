@@ -27,7 +27,6 @@ test("renders content with container and querySelector", () => {
   };
 
   const { container } = render(<Note note={note} />);
-  console.log(container);
 
   // use CSS-selectors to find rendered elements by using the method querySelector of the object container that is one of the fields returned by render method
   const div = container.querySelector(".note");

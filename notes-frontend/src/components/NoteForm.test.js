@@ -14,7 +14,6 @@ test("<NoteForm /> updates parent state and calls onSubmit", async () => {
   //   const input = screen.getByPlaceholderText("write note content here");
   const input = container.querySelector("#note-input");
 
-  screen.debug(input);
   const sendButton = screen.getByText("save");
 
   await user.type(input, "testing a form...");
