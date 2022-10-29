@@ -8,10 +8,11 @@ test("<NoteForm /> updates parent state and calls onSubmit", async () => {
   const addNote = jest.fn();
   const user = userEvent.setup();
 
-  render(<NoteForm addNote={addNote} />);
+  const { container } = render(<NoteForm addNote={addNote} />);
 
   //   const input = screen.getByRole("textbox");
-  const input = screen.getByPlaceholderText("write note content here");
+  //   const input = screen.getByPlaceholderText("write note content here");
+  const input = container.querySelector("#note-input");
 
   screen.debug(input);
   const sendButton = screen.getByText("save");
