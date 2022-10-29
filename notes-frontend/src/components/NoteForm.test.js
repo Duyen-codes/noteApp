@@ -20,5 +20,6 @@ test("<NoteForm /> updates parent state and calls onSubmit", async () => {
   await user.click(sendButton);
 
   expect(addNote.mock.calls).toHaveLength(1);
+  // expect first argument of the first call to be 'testing a form...'
   expect(addNote.mock.calls[0][0]).toBe("testing a form...");
 });
