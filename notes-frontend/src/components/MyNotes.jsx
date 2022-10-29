@@ -24,22 +24,24 @@ const MyNotes = (props) => {
       >
         My notes will be here
       </h2>
-      {myNotes.map((note) => {
-        return (
-          <Note
-            key={note.id}
-            note={note}
-            toggleImportance={() => toggleImportanceOf(note.id)}
-            handleRemoveNote={() => handleRemoveNote(note.id)}
-            handleEditNote={handleEditNote}
-            user={user}
-            visible={visible}
-          >
-            {" "}
-            {note.content}
-          </Note>
-        );
-      })}
+      <ul id="my-notes">
+        {myNotes.map((note) => {
+          return (
+            <Note
+              key={note.id}
+              note={note}
+              toggleImportance={() => toggleImportanceOf(note.id)}
+              handleRemoveNote={() => handleRemoveNote(note.id)}
+              handleEditNote={handleEditNote}
+              user={user}
+              visible={visible}
+            >
+              {" "}
+              {note.content}
+            </Note>
+          );
+        })}
+      </ul>
     </div>
   );
 };

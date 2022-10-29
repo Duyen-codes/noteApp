@@ -88,6 +88,7 @@ describe("Note app", function () {
       //   cy.contains("save").click();
       // });
 
+      // create a note with custom command
       beforeEach(function () {
         cy.createNote({
           content: "another note cypress",
@@ -95,12 +96,30 @@ describe("Note app", function () {
         });
       });
 
-      it("it can be made important", function () {
-        cy.contains("another note cypress");
+      // it("it can be made important", function () {
+      //   cy.contains("another note cypress");
+      //   cy.get('a[href*="mynotes"]').click();
+      //   cy.get("#mark-important").click();
+      //   cy.contains("another note cypress");
+      //   cy.get("#unmark-important");
+      // });
+    });
+
+    describe("and several notes exist", function () {
+      beforeEach(function () {
+        cy.createNote({ content: "first note", important: false });
+        cy.createNote({ content: "second note", important: false });
+        cy.createNote({ content: "third note", important: false });
+      });
+
+      it("one of those can be made important", function () {
         cy.get('a[href*="mynotes"]').click();
-        cy.get("#mark-important").click();
-        cy.contains("another note cypress");
-        cy.get("#unmark-important");
+        cy.contains("second note")
+          .parent()
+          .find("button")
+          .then((buttons) => {
+            cy.wrap(buttons[0]).click();
+          });
       });
     });
   });

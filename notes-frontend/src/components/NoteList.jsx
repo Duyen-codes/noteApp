@@ -38,7 +38,7 @@ const NoteList = (props) => {
           show {showAll ? "important" : "all"}
         </Button>
       </div>
-      <ul>
+      <ul id="note-list">
         {notesToShow.map((note) => {
           return (
             <Note
