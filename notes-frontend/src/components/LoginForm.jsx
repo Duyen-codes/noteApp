@@ -106,6 +106,7 @@ function LoginForm(props) {
               label="Remember me"
             />
             <Button
+              id="login-button"
               type="submit"
               fullWidth
               variant="contained"
