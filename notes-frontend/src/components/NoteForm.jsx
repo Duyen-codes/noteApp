@@ -14,7 +14,7 @@ const NoteForm = (props) => {
 
     addNote({
       content: newNote,
-      important: Math.random() > 0.5,
+      important: false,
     });
     setNewNote("");
   };
