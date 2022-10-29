@@ -16,6 +16,7 @@ const NoteForm = (props) => {
   };
   return (
     <Box
+      className="formDiv"
       component="form"
       onSubmit={handleSubmit}
       sx={{
