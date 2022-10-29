@@ -35,6 +35,7 @@ const NoteForm = (props) => {
         autoFocus
         value={newNote}
         onChange={handleNoteChange}
+        placeholder="write note content here"
       />
       <Button
         type="submit"
